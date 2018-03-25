@@ -145,12 +145,34 @@ class DBHelper {
   static urlForRestaurant(restaurant) {
     return (`./restaurant.html?id=${restaurant.id}`);
   }
-
+  
   /**
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
     return (`/img/${restaurant.photograph}`);
+  }
+
+  /**
+   * Builds a picture element, and child elements for restaurant.
+   */
+  static buildPictureElementForForRestaurant(pictureConfig = [], restaurant) {
+    const picture = document.createElement('picture');
+  
+    pictureConfig.forEach(config => {
+      const source = document.createElement('source');
+      source.setAttribute('media', config.media);
+      source.setAttribute('srcset', `/img/${restaurant.id}_${config.reference}_1x.jpg 1x, /img/${restaurant.id}_${config.reference}_2x.jpg 2x`);
+      picture.append(source)
+    });
+
+    const image = document.createElement('img');
+    image.src = `/img/${restaurant.id}_large_2x.jpg`;
+    image.setAttribute('alt', `View of ${restaurant.name}`);
+    
+    picture.append(image)
+
+    return picture;
   }
 
   /**

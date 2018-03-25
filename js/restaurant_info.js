@@ -9,10 +9,18 @@ window.initMap = () => {
     if (error) { // Got an error!
       console.error(error);
     } else {
-      self.map = new google.maps.Map(document.getElementById('map'), {
+      const $map = document.getElementById('map');
+      self.map = new google.maps.Map($map, {
         zoom: 16,
         center: restaurant.latlng,
         scrollwheel: false
+      });
+      const listener = self.map.addListener('tilesloaded', () => {
+        const els = $map.querySelectorAll('div, a, area, iframe');
+        els.forEach(el => {
+          el.setAttribute('tabindex', '-1');
+        });
+        google.maps.event.removeListener(listener);
       });
       fillBreadcrumb();
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
@@ -55,9 +63,46 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
-  const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img'
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+
+  const pictureConfig = [
+    {
+      media: `(max-width: 619px)`,
+      reference: `large`
+    },
+    // {
+    //   media: `(min-width: 620px) and (max-width: 779px)`,
+    //   reference: `medium`
+    // },
+    // {
+    //   media: `(min-width: 780px)`,
+    //   reference: `small`
+    // }
+  ];
+
+
+
+  const image = document.getElementById('restaurant-content');
+
+  const newNode = DBHelper.buildPictureElementForForRestaurant(pictureConfig, restaurant);
+
+  //image.parentNode.insertBefore(newNode, image);
+
+  //image.appendChild(newNode);
+
+  //image.append();
+
+
+  // const picture = document.createElement('picture');
+
+  // const source1
+
+
+
+
+  // const image = document.getElementById('restaurant-img');
+  // image.className = 'restaurant-img'
+  // image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  // image.setAttribute('alt', `View of ${restaurant.name}`);
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -75,11 +120,24 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
  */
 fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => {
   const hours = document.getElementById('restaurant-hours');
+
+  const caption = document.createElement('caption');
+  caption.innerHTML = 'Restaurant opening hours';
+  hours.appendChild(caption);
+
   for (let key in operatingHours) {
     const row = document.createElement('tr');
 
-    const day = document.createElement('td');
-    day.innerHTML = key;
+    const fullDay = document.createElement('th');
+    fullDay.setAttribute('scope', 'row');
+    fullDay.classList.add('full-day');
+    fullDay.innerHTML = key;
+    row.appendChild(fullDay);
+
+    const day = document.createElement('th');
+    day.setAttribute('scope', 'row');
+    day.classList.add('short-day');
+    day.innerHTML = key.substr(0, 3);
     row.appendChild(day);
 
     const time = document.createElement('td');
@@ -117,23 +175,45 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
-  const name = document.createElement('p');
-  name.innerHTML = review.name;
-  li.appendChild(name);
 
-  const date = document.createElement('p');
-  date.innerHTML = review.date;
-  li.appendChild(date);
+  const quote = document.createElement('blockquote');
+  li.appendChild(quote);
+
+  const name = document.createElement('p');
+  name.classList.add('review-item__author-date');
+  name.innerHTML = `<cite>${review.name}</cite> <span>${review.date}</span>`;
+  quote.appendChild(name);
 
   const rating = document.createElement('p');
-  rating.innerHTML = `Rating: ${review.rating}`;
-  li.appendChild(rating);
+  rating.classList.add('review-item__rating');
+  rating.innerHTML = createRatingHTML(review.rating);
+  quote.appendChild(rating);
 
   const comments = document.createElement('p');
-  comments.innerHTML = review.comments;
-  li.appendChild(comments);
+  comments.classList.add('review-item__comments');
+  comments.innerHTML = `<span>&ldquo;</span> ${review.comments} <span>&rdquo;</span>`;
+  quote.appendChild(comments);
 
   return li;
+}
+
+/**
+ * Creates the rating stars for restaurant reviews
+ */
+createRatingHTML = (rating = 0) => {
+  const reviewMaximum = 5;
+  const reviewRating = rating <= reviewMaximum ? rating : reviewMaximum;
+  const reviewRemaining = reviewMaximum - reviewRating;
+  let result = ``;
+  for (let i = 0; i < reviewRating; i++) {
+    result += `★`;
+  }
+  if (reviewRemaining) {
+    for (let i = 0; i < reviewRemaining; i++) {
+      result += `☆`;
+    }
+  }
+  return result;
 }
 
 /**

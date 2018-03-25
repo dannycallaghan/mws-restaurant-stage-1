@@ -75,10 +75,18 @@ window.initMap = () => {
     lat: 40.722216,
     lng: -73.987501
   };
-  self.map = new google.maps.Map(document.getElementById('map'), {
+  const $map = document.getElementById('map');
+  self.map = new google.maps.Map($map, {
     zoom: 12,
     center: loc,
     scrollwheel: false
+  });
+  const listener = self.map.addListener('tilesloaded', () => {
+    const els = $map.querySelectorAll('div, a, area, iframe');
+    els.forEach(el => {
+      el.setAttribute('tabindex', '-1');
+    });
+    google.maps.event.removeListener(listener);
   });
   updateRestaurants();
 }
@@ -137,28 +145,49 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  */
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
+  li.classList.add('restaurants-list__item')
 
-  const image = document.createElement('img');
-  image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  li.append(image);
+  const title = document.createElement('div');
+  title.classList.add('restaurants-list__item-title');
+  li.append(title);
+
+  const pictureConfig = [
+    {
+      media: `(max-width: 619px)`,
+      reference: `large`
+    },
+    {
+      media: `(min-width: 620px) and (max-width: 779px)`,
+      reference: `medium`
+    },
+    {
+      media: `(min-width: 780px)`,
+      reference: `small`
+    }
+  ];
+
+  title.append(DBHelper.buildPictureElementForForRestaurant(pictureConfig, restaurant));
 
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;
-  li.append(name);
+  title.append(name);
 
-  const neighborhood = document.createElement('p');
+  const content = document.createElement('div');
+  content.classList.add('restaurants-list__item-content');
+  li.append(content);
+  
+  const neighborhood = document.createElement('h2');
   neighborhood.innerHTML = restaurant.neighborhood;
-  li.append(neighborhood);
+  content.append(neighborhood);
 
-  const address = document.createElement('p');
+  const address = document.createElement('address');
   address.innerHTML = restaurant.address;
-  li.append(address);
+  content.append(address);
 
   const more = document.createElement('a');
-  more.innerHTML = 'View Details';
+  more.innerHTML = 'View Restaurant Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
-  li.append(more)
+  content.append(more)
 
   return li
 }
