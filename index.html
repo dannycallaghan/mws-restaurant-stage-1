@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,13 +19,13 @@
     </nav>
   </header>
 
-  <main id="main-content">
+  <main class="main-content">
     
-    <section class="area">
-      <div tabindex="-1" id="map" class="area__map" role="application" aria-label="Google Maps"></div>
+    <section class="google-map flex-full">
+      <div tabindex="-1" id="map" class="google-map__map" role="application" aria-label="Google Maps"></div>
     </section>
 
-    <aside class="filter-options">
+    <aside class="filter-options flex-full">
       <h2>Filter Results</h2>
       <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
         <option value="all">All Neighborhoods</option>
@@ -37,7 +36,7 @@
     </aside>
 
     <section>
-      <ul id="restaurants-list"></ul>
+      <ul id="restaurants-list" class="restaurants-list flex-container"></ul>
     </section>
   
   </main>
@@ -45,7 +44,6 @@
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6NkmKAv_XyWdwx8Y6LqIj7diWeNaGM1A&libraries=places&callback=initMap"></script>
-
 
   <footer>
     Copyright (c) 2017
@@ -55,5 +53,4 @@
   </footer>
 
 </body>
-
 </html>

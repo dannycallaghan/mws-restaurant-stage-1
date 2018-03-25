@@ -146,7 +146,8 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
   li.classList.add('restaurants-list__item')
-
+  li.classList.add('flex-full');
+  
   const title = document.createElement('div');
   title.classList.add('restaurants-list__item-title');
   li.append(title);

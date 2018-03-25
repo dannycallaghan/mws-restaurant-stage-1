@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Main CSS file -->
   <link rel="stylesheet" href="css/styles.css" type="text/css">
   <title>Restaurant Info</title>
 </head>
@@ -13,51 +12,46 @@
 
   <a href="#restaurant-container" class="skip-link">Skip to restaurant info</a>
     
-  <!-- Beginning header -->
   <header>
-    <!-- Beginning nav -->
     <nav>
       <h1>
         <a href="/">Restaurant Reviews</a>
       </h1>
     </nav>
-    <!-- Beginning breadcrumb -->
-    <ul id="breadcrumb">
-      <li>
+    
+    <ul id="breadcrumb" class="breadcrumb">
+      <li class="breadcrumb__item">
         <a href="/">Home</a>
       </li>
     </ul>
-    <!-- End breadcrumb -->
-    <!-- End nav -->
   </header>
-  <!-- End header -->
 
-  <!-- Beginning main -->
-  <main id="main-content">
-    <!-- Beginning map -->
-    <section class="area">
-      <div id="map" class="area__map" role="application" aria-label="Google Maps"></div>
+  <main class="main-content">
+    
+    <section class="google-map flex-full">
+      <div tabindex="-1" id="map" class="google-map__map" role="application" aria-label="Google Maps"></div>
     </section>
-    <!-- End map -->
-    <!-- Beginning restaurant -->
-    <section id="restaurant-container" class="restaurant-info">
-      <h1 id="restaurant-name"></h1>
+    
+    <section id="restaurant-container" class="restaurant flex-full">
+      
+      <h1 id="restaurant-name" class="restaurant__name"></h1>
 
-      <picture><source media="(max-width: 619px)" srcset="/img/1_large_1x.jpg 1x, /img/1_large_2x.jpg 2x"><img src="/img/1_large_2x.jpg" alt="View of Mission Chinese Food"></picture>
+      <div id="restaurant-image"></div>
 
-      <div id="restaurant-content" class="restaurant-info__content">
-        <p id="restaurant-cuisine"></p>
-        <address id="restaurant-address"></address>
-        <table id="restaurant-hours"></table>
+      <div id="restaurant-content" class="restaurant__content flex-full">
+        <p id="restaurant-cuisine" class="restaurant__cuisine"></p>
+        <address id="restaurant-address" class="restaurant__address"></address>
+        <table id="restaurant-hours" class="restaurant__hours"></table>
       </div>
+
     </section>
-    <!-- end restaurant -->
-    <!-- Beginning reviews -->
-    <section id="reviews-container">
-      <ul id="reviews-list"></ul>
+
+    <section id="reviews-container" class="reviews">
+      <ul id="reviews-list" class="reviews__list"></ul>
     </section>
-    <!-- End reviews -->
+
   </main>
+
   <!-- End main -->
 
   <!-- Beginning footer -->

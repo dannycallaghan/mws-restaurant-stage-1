@@ -69,40 +69,15 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
       media: `(max-width: 619px)`,
       reference: `large`
     },
-    // {
-    //   media: `(min-width: 620px) and (max-width: 779px)`,
-    //   reference: `medium`
-    // },
-    // {
-    //   media: `(min-width: 780px)`,
-    //   reference: `small`
-    // }
+    {
+      media: `(min-width: 620px)`,
+      reference: `medium`
+    }
   ];
 
-
-
-  const image = document.getElementById('restaurant-content');
-
-  const newNode = DBHelper.buildPictureElementForForRestaurant(pictureConfig, restaurant);
-
-  //image.parentNode.insertBefore(newNode, image);
-
-  //image.appendChild(newNode);
-
-  //image.append();
-
-
-  // const picture = document.createElement('picture');
-
-  // const source1
-
-
-
-
-  // const image = document.getElementById('restaurant-img');
-  // image.className = 'restaurant-img'
-  // image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  // image.setAttribute('alt', `View of ${restaurant.name}`);
+  const image = document.getElementById('restaurant-image');
+  const picture = DBHelper.buildPictureElementForForRestaurant(pictureConfig, restaurant);
+  image.appendChild(picture);
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -175,22 +150,23 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
+  li.classList.add('reviews__list-item');
 
   const quote = document.createElement('blockquote');
   li.appendChild(quote);
 
   const name = document.createElement('p');
-  name.classList.add('review-item__author-date');
+  name.classList.add('reviews__author-date');
   name.innerHTML = `<cite>${review.name}</cite> <span>${review.date}</span>`;
   quote.appendChild(name);
 
   const rating = document.createElement('p');
-  rating.classList.add('review-item__rating');
+  rating.classList.add('reviews__rating');
   rating.innerHTML = createRatingHTML(review.rating);
   quote.appendChild(rating);
 
   const comments = document.createElement('p');
-  comments.classList.add('review-item__comments');
+  comments.classList.add('reviews__comments');
   comments.innerHTML = `<span>&ldquo;</span> ${review.comments} <span>&rdquo;</span>`;
   quote.appendChild(comments);
 
@@ -222,7 +198,8 @@ createRatingHTML = (rating = 0) => {
 fillBreadcrumb = (restaurant=self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
-  li.innerHTML = restaurant.name;
+  li.classList.add('breadcrumb__item');
+  li.innerHTML = `<span>${restaurant.name}</span>`;
   breadcrumb.appendChild(li);
 }
 
