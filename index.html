@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,7 @@
 </head>
 
 <body>
-  
+
   <a href="#restaurants-list" class="skip-link">Skip to restaurant listings</a>
 
   <header>
@@ -20,7 +21,7 @@
   </header>
 
   <main class="main-content">
-    
+
     <section class="google-map flex-full">
       <div tabindex="-1" id="map" class="google-map__map" role="application" aria-label="Google Maps"></div>
     </section>
@@ -38,12 +39,8 @@
     <section>
       <ul id="restaurants-list" class="restaurants-list flex-container"></ul>
     </section>
-  
-  </main>
 
-  <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
-  <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6NkmKAv_XyWdwx8Y6LqIj7diWeNaGM1A&libraries=places&callback=initMap"></script>
+  </main>
 
   <footer>
     Copyright (c) 2017
@@ -51,6 +48,25 @@
       <strong>Restaurant Reviews</strong>
     </a> All Rights Reserved.
   </footer>
+
+  <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
+  <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6NkmKAv_XyWdwx8Y6LqIj7diWeNaGM1A&libraries=places&callback=initMap"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator
+          .serviceWorker
+          .register('/sw.js')
+          .then(registration => {
+            console.info(`ServiceWorker registration successful`);
+          }, err => {
+            console.warn(`ServiceWorker registration failed`);
+          });
+      });
+    }
+  </script>
 
 </body>
 </html>
