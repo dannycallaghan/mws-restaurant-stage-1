@@ -70,8 +70,12 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
       reference: `large`
     },
     {
-      media: `(min-width: 620px)`,
+      media: `(min-width: 620px) and (max-width: 1219px)`,
       reference: `medium`
+    },
+    {
+      media: `(min-width: 1220px)`,
+      reference: `large`
     }
   ];
 

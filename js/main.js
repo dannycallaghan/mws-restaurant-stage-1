@@ -206,3 +206,36 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     self.markers.push(marker);
   });
 }
+
+/**
+ * Manage focus should the user use the skip links
+ */
+(manageSkipLinkFocus = () => {
+
+  const skipLinks = document.querySelectorAll('a.skip-link.manage-focus');
+
+  if (skipLinks.length < 2) return;
+
+  const skipToRestaurant = skipLinks[0];
+  const skipToFilters = skipLinks[1];
+
+  skipToRestaurant.addEventListener('click', () => {
+    const restaurantList = document.getElementById('restaurants-list');
+    const firstLink = restaurantList.querySelectorAll('a')[0];
+    // Timeout required to activate the focus once the browser has
+    // scrolled the page down to the correct section
+    window.setTimeout(() => {
+      firstLink.focus();
+    }, 0);
+  });
+
+  skipToFilters.addEventListener('click', () => {
+    const firstFilter = document.getElementById('neighborhoods-select');
+    // Timeout required to activate the focus once the browser has
+    // scrolled the page down to the correct section
+    window.setTimeout(() => {
+      firstFilter.focus();
+    }, 0);
+  });
+
+})();

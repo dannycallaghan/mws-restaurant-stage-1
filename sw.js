@@ -1,4 +1,4 @@
-const staticCacheName = 'udacity-mws-p1-9';
+const staticCacheName = 'udacity-mws-p-13';
 
 self.addEventListener('install', event => {
   event.waitUntil(

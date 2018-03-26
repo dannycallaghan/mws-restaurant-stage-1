@@ -10,7 +10,7 @@
 
 <body>
 
-  <a href="#restaurants-list" class="skip-link">Skip to restaurant listings</a>
+  <a href="#restaurants-list" class="skip-link manage-focus">Skip to restaurant listings</a>
 
   <header>
     <nav>
@@ -22,11 +22,13 @@
 
   <main class="main-content">
 
+    <a href="#filter-options" class="skip-link manage-focus">Skip over Google Map</a>
+
     <section class="google-map flex-full">
       <div tabindex="-1" id="map" class="google-map__map" role="application" aria-label="Google Maps"></div>
     </section>
 
-    <aside class="filter-options flex-full">
+    <aside id="filter-options" class="filter-options flex-full">
       <h2>Filter Results</h2>
       <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
         <option value="all">All Neighborhoods</option>
