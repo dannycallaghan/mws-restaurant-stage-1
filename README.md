@@ -10,7 +10,11 @@
 
 2. In the repo's directory, run the following:
 
-`python -m SimpleHTTPServer 8000`
+```javascript
+# python -m SimpleHTTPServer 8000
+```
+
+Should now be able to view the application at http://0.0.0.0:8000
 
 
 
